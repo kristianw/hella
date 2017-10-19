@@ -48,6 +48,7 @@
 
     function getCounts() {
         $.get("getcounts", function (data) {
+            var arr_from_json = JSON.parse(data);
             alert(data);
         });
     }
