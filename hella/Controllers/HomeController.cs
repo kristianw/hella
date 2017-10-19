@@ -12,73 +12,75 @@ namespace hella.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly RestClient _client;
+
+        public HomeController()
+        {
+            _client = new RestClient("https://10.10.1.12:8091");
+            System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
+
+        }
+
         public ActionResult Index()
         {
-            RestClient client;
-            RestRequest request;
-            AuthenticationModel authenticationDetails;
-            IRestResponse response;
-
-            string token = RetrieveAccessToken(out client, out request, out authenticationDetails, out response);
-            ContainerModel cameraData = RetrieveCameraData(client, out request, out authenticationDetails, out response, token);
-       
-            
-
-            return View(cameraData);
+           
+            return View();
 
         }
 
+        // http://localhost:xx/home/getcounts
 
-        private static ContainerModel RetrieveCameraData(RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response, string token)
+        public ActionResult GetCounts()
         {
-            // Get Camera Data
-            request = new RestRequest("/apiv1/sensorData/counts", Method.GET);
-            request.AddHeader("Authorization", string.Format("Bearer {0}", token));
-            authenticationDetails = new AuthenticationModel
-            {
-                Username = "user-role-edit",
-                Password = "Sm4rtCity"
-            };
+            var accessToken = RetrieveAccessToken();
+            var cameraDatas = RetrieveCameraData(accessToken);
 
-            request.AddJsonBody(authenticationDetails);
-
-            System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
-            response = client.Execute(request);
-            var dataContent = response.Content;
-
-            var container = JsonConvert.DeserializeObject<ContainerModel>(dataContent);
-            Console.WriteLine("Response: " + dataContent);
-
-            return container;
+            return Json(JsonConvert.SerializeObject(cameraDatas), JsonRequestBehavior.AllowGet);
         }
 
-        private static string RetrieveAccessToken(out RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response)
+
+
+
+        private string RetrieveAccessToken()
         {
             // Access Token
-            string token = "";
-            client = new RestClient("https://10.10.1.12:8091");
-            request = new RestRequest("/auth", Method.POST);
+            var request = new RestRequest("/auth", Method.POST);
             request.AddHeader("Content-Type", "application/json");
-            authenticationDetails = new AuthenticationModel
+            var authenticationDetails = new AuthenticationModel
             {
                 Username = "user-role-edit",
                 Password = "Sm4rtCity"
             };
             var jsonBody = JsonConvert.SerializeObject(authenticationDetails);
             request.AddParameter("application/json", jsonBody, ParameterType.RequestBody);
-            //request.AddJsonBody(JsonConvert.SerializeObject(authenticationDetails));
-
-            //X509Certificate2 certificates = new X509Certificate2();
-            //certificates.Import(...);
-            //client.ClientCertificates = new X509CertificateCollection() { certificates };
+            
             System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
 
-            response = client.Execute(request);
+            var response = _client.Execute(request);
             var content = response.Content;
-            Console.WriteLine("Response: " + content);
+
+            Console.WriteLine("Response: " + response.Content);
+
             var responseModel = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
-            token = responseModel["access_token"].ToString();
+            var token = responseModel["access_token"].ToString();
             return token;
+        }
+
+        private List<CameraData> RetrieveCameraData(string token)
+        {
+            // Get Camera Data
+            var request = new RestRequest("/apiv1/sensorData/counts", Method.GET);
+            request.AddHeader("Authorization", string.Format("Bearer {0}", token));
+
+            var response = _client.Execute(request);
+
+            var responseModel = JsonConvert.DeserializeObject<ContainerModel>(response.Content);
+            Console.WriteLine("Response: " + response.Content);
+
+            var jsonSection = responseModel.Counts.FirstOrDefault(c => c.Name == "Door");
+            var cameraDatas = jsonSection.Datas;
+
+            return cameraDatas;
         }
 
         public ActionResult About()
