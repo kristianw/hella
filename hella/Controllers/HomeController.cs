@@ -20,14 +20,16 @@ namespace hella.Controllers
             IRestResponse response;
 
             string token = RetrieveAccessToken(out client, out request, out authenticationDetails, out response);
-            DataJsonSections cameraData = RetrieveCameraData(client, out request, out authenticationDetails, out response, token);
+            ContainerModel cameraData = RetrieveCameraData(client, out request, out authenticationDetails, out response, token);
+       
+            
 
-            return View(cameraData.Datas);
+            return View(cameraData);
 
         }
 
 
-        private static DataJsonSections RetrieveCameraData(RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response, string token)
+        private static ContainerModel RetrieveCameraData(RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response, string token)
         {
             // Get Camera Data
             request = new RestRequest("/apiv1/sensorData/counts", Method.GET);
@@ -47,7 +49,7 @@ namespace hella.Controllers
             var container = JsonConvert.DeserializeObject<ContainerModel>(dataContent);
             Console.WriteLine("Response: " + dataContent);
 
-            return container.Counts[0];
+            return container;
         }
 
         private static string RetrieveAccessToken(out RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response)
