@@ -20,14 +20,14 @@ namespace hella.Controllers
             IRestResponse response;
 
             string token = RetrieveAccessToken(out client, out request, out authenticationDetails, out response);
-            ContainerModel cameraData = RetrieveCameraData(client, out request, out authenticationDetails, out response, token);
+            DataJsonSections cameraData = RetrieveCameraData(client, out request, out authenticationDetails, out response, token);
 
-            return View(cameraData.Counts[0]);
+            return View(cameraData.Datas);
 
         }
 
 
-        private static ContainerModel RetrieveCameraData(RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response, string token)
+        private static DataJsonSections RetrieveCameraData(RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response, string token)
         {
             // Get Camera Data
             request = new RestRequest("/apiv1/sensorData/counts", Method.GET);
