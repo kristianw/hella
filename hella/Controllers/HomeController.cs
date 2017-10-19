@@ -13,11 +13,24 @@ namespace hella.Controllers
     {
         public ActionResult Index()
         {
-            // Access Token
-            var client = new RestClient("https://10.10.1.12:8091");
-            var request = new RestRequest("/auth", Method.POST);
-            request.AddHeader("Content-Type", "application/json");
-            AuthenticationModel authenticationDetails = new AuthenticationModel
+            RestClient client;
+            RestRequest request;
+            AuthenticationModel authenticationDetails;
+            IRestResponse response;
+
+            RetrieveAccessToken(out client, out request, out authenticationDetails, out response);
+            RetrieveCameraData(client, out request, out authenticationDetails, out response);
+
+            return View();
+
+        }
+
+        private static void RetrieveCameraData(RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response)
+        {
+            // Get Camera Data
+            request = new RestRequest("/apiv1/sensorData", Method.GET);
+            request.AddHeader("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZGVudGl0eSI6MiwibmJmIjoxNTA4MzY2Mzk1LCJleHAiOjE1MDgzNjk5OTUsImlhdCI6MTUwODM2NjM5NX0.4ntLvFuQLxZPP-22sq3_rDP5WYKiFkteYsOTBKEQtPo");
+            authenticationDetails = new AuthenticationModel
             {
                 Username = "user-role-edit",
                 Password = "Sm4rtCity"
@@ -25,35 +38,33 @@ namespace hella.Controllers
 
             request.AddJsonBody(authenticationDetails);
 
-            //X509Certificate2 certificates = new X509Certificate2();
-            //certificates.Import(...);
-            //client.ClientCertificates = new X509CertificateCollection() { certificates };
+            System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
+            response = client.Execute(request);
+            var dataContent = response.Content;
+            Console.WriteLine("Response: " + dataContent);
+        }
 
-            IRestResponse response = client.Execute(request);
-            var content = response.Content; 
-            Console.WriteLine("Response: " + content);
-
-
-            // Get Camera Data
-            client = new RestClient("https://10.10.1.12:8091/apiv1/sensorData");
-            request = new RestRequest("/auth", Method.GET);
-            request.AddHeader("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZGVudGl0eSI6MiwibmJmIjoxNTA4MzY2Mzk1LCJleHAiOjE1MDgzNjk5OTUsImlhdCI6MTUwODM2NjM5NX0.4ntLvFuQLxZPP-22sq3_rDP5WYKiFkteYsOTBKEQtPo");
+        private static void RetrieveAccessToken(out RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response)
+        {
+            // Access Token
+            client = new RestClient("https://10.10.1.12:8091");
+            request = new RestRequest("/auth", Method.POST);
+            request.AddHeader("Content-Type", "application/json");
             authenticationDetails = new AuthenticationModel
             {
                 Username = "user-role-edit",
                 Password = "Sm4rtCity"
-            };  
-
+            };
             request.AddJsonBody(authenticationDetails);
 
+            //X509Certificate2 certificates = new X509Certificate2();
+            //certificates.Import(...);
+            //client.ClientCertificates = new X509CertificateCollection() { certificates };
+            System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
 
             response = client.Execute(request);
-            var dataContent = response.Content;
-            Console.WriteLine("Response: " + dataContent);
-
-
-            return View();
-                
+            var content = response.Content;
+            Console.WriteLine("Response: " + content);
         }
 
         public ActionResult About()
