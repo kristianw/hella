@@ -1,47 +1,34 @@
 ﻿@*@model IEnumerable<hella.Models.ContainerModel>*@
 
 @{
-    ViewBag.Title = "Home Page";
+    ViewBag.Title = "People Counting";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead"></p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Class</th>
+                <th>In Count</th>
+                <th>Out Count</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="Class0"></td>
+                <td id="InZero"></td>
+                <td id="OutZero"></td>
+            </tr>
+            <tr>
+                <td id="Class1"></td>
+                <td id="InOne"></td>
+                <td id="OutOne"></td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
-
-<div id="demo"></div>
-<div id="demot"></div>
-
-
-
-@*@foreach (var item in Model)
-{
-    @Html.DisplayFor(modelItem => item.Datas[0].ToString())
-    @Html.DisplayFor(modelItem => item.Counts)
-}*@
 
 <script>
 
@@ -49,7 +36,7 @@
     $(document).ready(function () {
 
         // set everything in a timer
-        setInterval(getCounts, 5000);
+        setInterval(getCounts, 1000);
 
     });
 
@@ -58,16 +45,16 @@
 
             // deserialize json into obj
             var cameraData = JSON.parse(data);
-            document.getElementById("demot").innerHTML = "class:" + cameraData[0].class + "in: " + cameraData[0].in + "out: " + cameraData[0].out;
+            document.getElementById("Class0").innerHTML = cameraData[0].class;
+            document.getElementById("InZero").innerHTML = cameraData[0].in;
+            document.getElementById("OutZero").innerHTML = cameraData[0].out;
+            document.getElementById("Class1").innerHTML = cameraData[1].class;
+            document.getElementById("InOne").innerHTML = cameraData[1].in;
+            document.getElementById("OutOne").innerHTML = cameraData[1].out;
 
-
-
-            
         });
     }
 </script>
 
-@*// deserialize json into js
-// put into objects?
-// pass through to page
+@*
 // get async*@ 
