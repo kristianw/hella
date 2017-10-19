@@ -9,10 +9,10 @@ namespace hella.Models
     public class ContainerModel
     {
         [JsonProperty(PropertyName = "counts")]
-        public List<Count> Counts { get; set; }
+        public List<DataJsonSections> Counts { get; set; }
     }
 
-    public class Count
+    public class DataJsonSections
     {
         [JsonProperty(PropertyName = "data")]
         public List<CameraData> Datas { get; set; }
