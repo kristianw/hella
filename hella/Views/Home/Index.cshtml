@@ -32,6 +32,10 @@
     </div>
 </div>
 
+<div id="demo"></div>
+<div id="demot"></div>
+
+
 
 @*@foreach (var item in Model)
 {
@@ -40,16 +44,30 @@
 }*@
 
 <script>
+
+
     $(document).ready(function () {
 
         // set everything in a timer
-        setInterval(getCounts, 10000);
+        setInterval(getCounts, 5000);
+
     });
 
     function getCounts() {
         $.get("getcounts", function (data) {
-            var arr_from_json = JSON.parse(data);
-            alert(data);
+
+            // deserialize json into obj
+            var cameraData = JSON.parse(data);
+            document.getElementById("demot").innerHTML = "class:" + cameraData[0].class + "in: " + cameraData[0].in + "out: " + cameraData[0].out;
+
+
+
+            
         });
     }
 </script>
+
+@*// deserialize json into js
+// put into objects?
+// pass through to page
+// get async*@ 
