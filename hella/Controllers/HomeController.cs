@@ -1,4 +1,5 @@
 ﻿using hella.Models;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -18,18 +19,20 @@ namespace hella.Controllers
             AuthenticationModel authenticationDetails;
             IRestResponse response;
 
-            RetrieveAccessToken(out client, out request, out authenticationDetails, out response);
-            RetrieveCameraData(client, out request, out authenticationDetails, out response);
+            string token = RetrieveAccessToken(out client, out request, out authenticationDetails, out response);
+            RetrieveCameraData(client, out request, out authenticationDetails, out response, token);
+
+
 
             return View();
 
         }
 
-        private static void RetrieveCameraData(RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response)
+        private static void RetrieveCameraData(RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response, string token)
         {
             // Get Camera Data
-            request = new RestRequest("/apiv1/sensorData", Method.GET);
-            request.AddHeader("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZGVudGl0eSI6MiwibmJmIjoxNTA4MzY2Mzk1LCJleHAiOjE1MDgzNjk5OTUsImlhdCI6MTUwODM2NjM5NX0.4ntLvFuQLxZPP-22sq3_rDP5WYKiFkteYsOTBKEQtPo");
+            request = new RestRequest("/apiv1/sensorData/counts", Method.GET);
+            request.AddHeader("Authorization", string.Format("Bearer {0}", token));
             authenticationDetails = new AuthenticationModel
             {
                 Username = "user-role-edit",
@@ -41,12 +44,15 @@ namespace hella.Controllers
             System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
             response = client.Execute(request);
             var dataContent = response.Content;
+
+            var container = JsonConvert.DeserializeObject<ContainerModel>(dataContent);
             Console.WriteLine("Response: " + dataContent);
         }
 
-        private static void RetrieveAccessToken(out RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response)
+        private static string RetrieveAccessToken(out RestClient client, out RestRequest request, out AuthenticationModel authenticationDetails, out IRestResponse response)
         {
             // Access Token
+            string token = "";
             client = new RestClient("https://10.10.1.12:8091");
             request = new RestRequest("/auth", Method.POST);
             request.AddHeader("Content-Type", "application/json");
@@ -55,7 +61,9 @@ namespace hella.Controllers
                 Username = "user-role-edit",
                 Password = "Sm4rtCity"
             };
-            request.AddJsonBody(authenticationDetails);
+            var jsonBody = JsonConvert.SerializeObject(authenticationDetails);
+            request.AddParameter("application/json", jsonBody, ParameterType.RequestBody);
+            //request.AddJsonBody(JsonConvert.SerializeObject(authenticationDetails));
 
             //X509Certificate2 certificates = new X509Certificate2();
             //certificates.Import(...);
@@ -65,6 +73,9 @@ namespace hella.Controllers
             response = client.Execute(request);
             var content = response.Content;
             Console.WriteLine("Response: " + content);
+            var responseModel = JsonConvert.DeserializeObject<Dictionary<string, object>>(response.Content);
+            token = responseModel["access_token"].ToString();
+            return token;
         }
 
         public ActionResult About()
