@@ -22,3 +22,20 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.container {
+    display: flex;
+    
+}
+
+.jumbotron-style {
+    padding: 0 12%;
+    margin-top: 5%;
+}
+
+.container-style div {
+    background-color: blueviolet;
+    border-radius: 15px;
+    padding: 5% 0;
+    color: white;
+}

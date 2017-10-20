@@ -16,7 +16,7 @@ namespace hella.Controllers
 
         public HomeController()
         {
-            _client = new RestClient("https://10.10.1.12:8091");
+                _client = new RestClient("https://192.168.0.100:8091");
             System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
 
         }
