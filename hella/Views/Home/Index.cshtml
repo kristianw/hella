@@ -9,30 +9,35 @@
 
 <div class="grid2x2">
     <div class="box box1">
-        <div class="" style="background-color:indianred; ">
-            @*<img src="~/Images/gender.png" style="max-height: 50%;">*@
-            <p id="InZero" style="color: black" class="h1 glyphicon-bold"></p>
+        <div class="" style="background-color:#559e83; ">
+            <figure class="center-block text-center">
+                <img src="~/Images/gender.png" style="width: 50%;  margin: 5%;" class="center-block">
+                <figcaption id="InZero" style="color: black; padding-bottom: 4%;" class="h1 text-center"></figcaption>
+            </figure>
         </div>
     </div>
     <div class="box box2">
-        <div class="" style="background-color:green;  ">
-            @*<img src="~/Images/gender.png" style="max-height: 50%;">*@
-            <p id="OutZero" style="color: black" class="h1 glyphicon-bold">
-            </p>
+        <div class="" style="background-color:#559e83;  ">
+            <figure class="center-block text-center">
+                <img src="~/Images/gender.png" style="width: 50%; margin: 5%;" class="center-block">
+                <figcaption id="OutZero" style="color: black; padding-bottom: 4%;" class="h1 text-center"></figcaption>
+            </figure>
         </div>
     </div>
     <div class="box box3">
-        <div class="c" style="background-color:green;  ">
-            @*<img src="~/Images/gender.png" style="max-height: 50%;">*@
-            <p id="InOne" style="color: black" class="h1 glyphicon-bold">
-            </p>
+        <div class="c" style="background-color:#ae5a41;  ">
+            <figure class="center-block text-center">
+                <img src="~/Images/gender.png" style="width: 50%; margin: 5%;">
+                <figcaption id="InOne" style="color: black; padding-bottom: 4%;" class="h1 text-center"></figcaption>
+            </figure>
         </div>
     </div>
     <div class="box box4">
-        <div class="" style="background-color:green;  ">
-            @*<img src="~/Images/gender.png" style="max-height: 50%;">*@
-            <p id="OutOne" style="color: black" class="h1 glyphicon-bold">
-            </p>
+        <div class="" style="background-color:#ae5a41;  ">
+            <figure class="center-block text-center">
+                <img src="~/Images/gender.png" style="width: 50%; margin: 5%;">
+                <figcaption id="OutOne" style="color: black; padding-bottom: 4%;" class="h1 text-center"></figcaption>
+            </figure>
         </div>
     </div>
 </div>
@@ -69,9 +74,9 @@
             var cameraData = JSON.parse(data);
             //document.getElementById("Class0").innerHTML = cameraData[0].class;
             document.getElementById("InZero").innerHTML = "In: " + cameraData[0].in + " Adults";
-            document.getElementById("OutZero").innerHTML = "In: " + cameraData[0].out + " Adults";
+            document.getElementById("OutZero").innerHTML = "Out: " + cameraData[0].out + " Adults";
             //document.getElementById("Class1").innerHTML = cameraData[1].class;
-            document.getElementById("InOne").innerHTML = "Out: " + cameraData[1].in + " Children";
+            document.getElementById("InOne").innerHTML = "In: " + cameraData[1].in + " Children";
             document.getElementById("OutOne").innerHTML = "Out: " + cameraData[1].out + " Children";
             document.getElementById("currentRoomCount").innerHTML = (parseInt(cameraData[0].in) + parseInt(cameraData[1].in)) - (parseInt(cameraData[0].out) + parseInt(cameraData[1].out));
 
