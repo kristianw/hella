@@ -23,19 +23,60 @@ textarea {
     max-width: 280px;
 }
 
-.container {
+
+
+
+
+
+
+
+
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.grid2x2 {
+    min-height: 100%;
     display: flex;
-    
+    flex-wrap: wrap;
+    flex-direction: row;
 }
 
-.jumbotron-style {
-    padding: 0 12%;
-    margin-top: 5%;
+    .grid2x2 > div {
+        display: flex;
+        flex-basis: calc(50% - 40px);
+        justify-content: center;
+        flex-direction: column;
+    }
+
+        .grid2x2 > div > div {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+.box {
+    margin: 20px;
 }
 
-.container-style div {
-    background-color: blueviolet;
-    border-radius: 15px;
-    padding: 5% 0;
-    color: white;
+.box1 {
+    background-color: red;
+    width: 20%;
+}
+
+.box2 {
+    background-color: orange;
+    width: 20%;
+}
+
+.box3 {
+    background-color: purple;
+    width: 20%;
+}
+
+.box4 {
+    background-color: grey;
+    width: 20%;
 }

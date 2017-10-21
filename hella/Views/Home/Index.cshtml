@@ -5,51 +5,54 @@
 }
 
 
+<h1 class="text-center center-block">People Counting</h1>
 
-<div class="container">
-
-    <div>
-        <div class="row">
-            <div class="col-md-6" id="InZero" class="font-weight-bold container-style"></div>
-            <div class="col-md-6" id="OutZero" class="font-weight-bold container-style"></div>
-        </div>
-        <div class="row">
-            <div class="col-md-6" id="InOne" class="font-weight-bold container-style"></div>
-            <div class="col-md-6" id="OutOne" class="font-weight-bold container-style"></div>
-        </div>
-
-        <hr />
-        <table class="table text-center">
-            <div><h1 class="text-center">People Counting</h1></div>
-            <thead>
-                <tr>
-                    <th><h2 class="text-center">Class</h2></th>
-                    <th><h2 class="text-center">In Count</h2></th>
-                    <th><h2 class="text-center">Out Count</h2></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td id="Class0"><h3></h3></td>
-                    <td id="InZero" class="font-weight-bold" style="background-color:blueviolet; border-radius: 15px; padding: 5% 0; color: white"></td>
-                    <td id="OutZero"><h3></h3></td>
-                </tr>
-                <tr>
-                    <td id="Class1"></td>
-                    <td id="InOne"></td>
-                    <td id="OutOne"></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div class="bg-success">
-            <h1>Current Room Count</h1>
-            <h1 id="currentRoomCount" class="text-center" style=" border-radius: 15px; padding: 10% 0; color: white;"></h1>
+<div class="grid2x2">
+    <div class="box box1">
+        <div class="" style="background-color:indianred; ">
+            @*<img src="~/Images/gender.png" style="max-height: 50%;">*@
+            <p id="InZero" style="color: black" class="h1 glyphicon-bold"></p>
         </div>
     </div>
+    <div class="box box2">
+        <div class="" style="background-color:green;  ">
+            @*<img src="~/Images/gender.png" style="max-height: 50%;">*@
+            <p id="OutZero" style="color: black" class="h1 glyphicon-bold">
+            </p>
+        </div>
+    </div>
+    <div class="box box3">
+        <div class="c" style="background-color:green;  ">
+            @*<img src="~/Images/gender.png" style="max-height: 50%;">*@
+            <p id="InOne" style="color: black" class="h1 glyphicon-bold">
+            </p>
+        </div>
+    </div>
+    <div class="box box4">
+        <div class="" style="background-color:green;  ">
+            @*<img src="~/Images/gender.png" style="max-height: 50%;">*@
+            <p id="OutOne" style="color: black" class="h1 glyphicon-bold">
+            </p>
+        </div>
+    </div>
+</div>
 
 
-// Current Room Count
+
+
+
+
+
+
+@*<div class="container">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <h1>Current Room Count</h1>
+            <h1 id="currentRoomCount" class="text-center" ></h1>
+        </div>
+    </div>*@
+
+
+
 
 <script>
 
@@ -64,12 +67,12 @@
 
             // deserialize json into obj
             var cameraData = JSON.parse(data);
-            document.getElementById("Class0").innerHTML = cameraData[0].class;
-            document.getElementById("InZero").innerHTML = cameraData[0].in + " Adults";
-            document.getElementById("OutZero").innerHTML = cameraData[0].out;
-            document.getElementById("Class1").innerHTML = cameraData[1].class;
-            document.getElementById("InOne").innerHTML = cameraData[1].in;
-            document.getElementById("OutOne").innerHTML = cameraData[1].out;
+            //document.getElementById("Class0").innerHTML = cameraData[0].class;
+            document.getElementById("InZero").innerHTML = "In: " + cameraData[0].in + " Adults";
+            document.getElementById("OutZero").innerHTML = "In: " + cameraData[0].out + " Adults";
+            //document.getElementById("Class1").innerHTML = cameraData[1].class;
+            document.getElementById("InOne").innerHTML = "Out: " + cameraData[1].in + " Children";
+            document.getElementById("OutOne").innerHTML = "Out: " + cameraData[1].out + " Children";
             document.getElementById("currentRoomCount").innerHTML = (parseInt(cameraData[0].in) + parseInt(cameraData[1].in)) - (parseInt(cameraData[0].out) + parseInt(cameraData[1].out));
 
         });
