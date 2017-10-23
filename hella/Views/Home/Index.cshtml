@@ -5,47 +5,47 @@
 }
 
 
-<h1 class="text-center center-block" style="font-weight:100;">People Counting</h1>
+<h1 class="text-center center-block" style="font-weight:bold; ">People Counting</h1>
 
 <div class="grid2x2">
     <div class="box box1">
         <div class="" style="background-color:#559e83; ">
             <figure class="center-block text-center">
                 <img src="~/Images/gender.png" style="width: 50%;  margin: 5%;" class="center-block">
-                <figcaption id="InZero" style="color: black; padding-bottom: 4%;" class="h1 text-center"></figcaption>
+                <figcaption id="InZero" style="color: black; padding-bottom: 4%;" class="h2 text-center"></figcaption>
             </figure>
         </div>
     </div>
     <div class="box box2">
-        <div class="" style="background-color:#559e83;  ">
+        <div class="" style="background-color:#559e83;">
             <figure class="center-block text-center">
                 <img src="~/Images/gender.png" style="width: 50%; margin: 5%;" class="center-block">
-                <figcaption id="OutZero" style="color: black; padding-bottom: 4%;" class="h1 text-center"></figcaption>
+                <figcaption id="OutZero" style="color: black; padding-bottom: 4%;" class="h2 text-center"></figcaption>
             </figure>
         </div>
     </div>
     <div class="box box3">
         <div class="c" style="background-color:#ae5a41;  ">
             <figure class="center-block text-center">
-                <img src="~/Images/gender.png" style="width: 50%; margin: 5%;">
-                <figcaption id="InOne" style="color: black; padding-bottom: 4%;" class="h1 text-center"></figcaption>
+                <img src="~/Images/child.png" style="width: 50%; margin: 5% 5% 0 5%;">
+                <figcaption id="InOne" style="color: black; padding-bottom: 4%;" class="h2 text-center"></figcaption>
             </figure>
         </div>
     </div>
     <div class="box box4">
-        <div class="" style="background-color:#ae5a41;  ">
+        <div class="" style="background-color:#ae5a41;">
             <figure class="center-block text-center">
-                <img src="~/Images/gender.png" style="width: 50%; margin: 5%;">
-                <figcaption id="OutOne" style="color: black; padding-bottom: 4%;" class="h1 text-center"></figcaption>
+                <img src="~/Images/child.png" style="width: 50%; margin: 5% 5% 0 5%;">
+                <figcaption id="OutOne" style="color: black; padding-bottom: 4%;" class="h2 text-center"></figcaption>
             </figure>
         </div>
     </div>
 </div>
-
+<br />
 <div class="container">
-    <div class="col-lg-12 col-md-12 col-sm-12 text-center">
-        <h1 >Current Room Count</h1>
-        <h1 id="currentRoomCount" class="text-center" ></h1>
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center center-block" style="background-color: #1b85b8; padding: 2% 0 0.5% 0; width: 100%; color: black;">
+        <h2 style="font-weight: bold;">Current Room Count</h2>
+        <h1 id="currentRoomCount" class="text-center"></h1>
     </div>
 </div>
 
@@ -65,19 +65,12 @@
 
             // deserialize json into obj
             var cameraData = JSON.parse(data);
-            //document.getElementById("Class0").innerHTML = cameraData[0].class;
             document.getElementById("InZero").innerHTML = "In: " + cameraData[0].in + " Adults";
             document.getElementById("OutZero").innerHTML = "Out: " + cameraData[0].out + " Adults";
-            //document.getElementById("Class1").innerHTML = cameraData[1].class;
             document.getElementById("InOne").innerHTML = "In: " + cameraData[1].in + " Children";
             document.getElementById("OutOne").innerHTML = "Out: " + cameraData[1].out + " Children";
             document.getElementById("currentRoomCount").innerHTML = (parseInt(cameraData[0].in) + parseInt(cameraData[1].in)) - (parseInt(cameraData[0].out) + parseInt(cameraData[1].out));
-
         });
     }
 </script>
 
-@*
-    // get async
-    // background-color:#33A5FF;
-*@

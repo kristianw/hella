@@ -16,16 +16,14 @@ namespace hella.Controllers
 
         public HomeController()
         {
-                _client = new RestClient("https://192.168.0.100:8091");
+            _client = new RestClient("https://192.168.0.100:8091");
             System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
 
         }
 
         public ActionResult Index()
         {
-           
             return View();
-
         }
 
         // http://localhost:xx/home/getcounts

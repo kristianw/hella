@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 6px;
     padding-bottom: 20px;
 }
 
@@ -23,15 +23,6 @@ textarea {
     max-width: 280px;
 }
 
-
-
-
-
-
-
-
-
-
 html, body {
     height: 100%;
     margin: 0;
@@ -44,39 +35,36 @@ html, body {
     flex-direction: row;
 }
 
-    .grid2x2 > div {
-        display: flex;
-        flex-basis: calc(50% - 40px);
-        justify-content: center;
-        flex-direction: column;
-    }
+.grid2x2 > div {
+    display: flex;
+    flex-basis: calc(50% - 40px);
+    justify-content: center;
+    flex-direction: column;
+}
 
-        .grid2x2 > div > div {
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-        }
+.grid2x2 > div > div {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+}
 
 .box {
     margin: 20px;
 }
 
 .box1 {
-    background-color: red;
     width: 20%;
 }
 
 .box2 {
-    background-color: orange;
     width: 20%;
 }
 
 .box3 {
-    background-color: purple;
     width: 20%;
 }
 
 .box4 {
-    background-color: grey;
     width: 20%;
 }
+
