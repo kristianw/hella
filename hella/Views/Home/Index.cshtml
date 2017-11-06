@@ -1,6 +1,4 @@
-﻿@*@model IEnumerable<hella.Models.ContainerModel>*@
-
-@{
+﻿@{
     ViewBag.Title = "My ASP.NET Application";
 }
 
@@ -9,9 +7,9 @@
 
 <div class="grid2x2">
     <div class="box box1">
-        <div class="" style="background-color:#559e83; ">
+        <div class="" style="background-color:#559e83;">
             <figure class="center-block text-center">
-                <img src="~/Images/gender.png" style="width: 50%;  margin: 5%;" class="center-block">
+                <img src="~/Content/gender.png" style="width: 50%;  margin: 5%;" class="center-block">
                 <figcaption id="InZero" style="color: black; padding-bottom: 4%;" class="h2 text-center"></figcaption>
             </figure>
         </div>
@@ -19,7 +17,7 @@
     <div class="box box2">
         <div class="" style="background-color:#559e83;">
             <figure class="center-block text-center">
-                <img src="~/Images/gender.png" style="width: 50%; margin: 5%;" class="center-block">
+                <img src="~/Content/gender.png" style="width: 50%; margin: 5%;" class="center-block">
                 <figcaption id="OutZero" style="color: black; padding-bottom: 4%;" class="h2 text-center"></figcaption>
             </figure>
         </div>
@@ -27,7 +25,7 @@
     <div class="box box3">
         <div class="c" style="background-color:#ae5a41;  ">
             <figure class="center-block text-center">
-                <img src="~/Images/child.png" style="width: 50%; margin: 5% 5% 0 5%;">
+                <img src="~/Content/child.png" style="width: 50%; margin: 5% 5% 0 5%;">
                 <figcaption id="InOne" style="color: black; padding-bottom: 4%;" class="h2 text-center"></figcaption>
             </figure>
         </div>
@@ -35,7 +33,7 @@
     <div class="box box4">
         <div class="" style="background-color:#ae5a41;">
             <figure class="center-block text-center">
-                <img src="~/Images/child.png" style="width: 50%; margin: 5% 5% 0 5%;">
+                <img src="~/Content/child.png" style="width: 50%; margin: 5% 5% 0 5%;">
                 <figcaption id="OutOne" style="color: black; padding-bottom: 4%;" class="h2 text-center"></figcaption>
             </figure>
         </div>
@@ -43,7 +41,7 @@
 </div>
 <br />
 <div class="container">
-    <div class="col-lg-12 col-md-12 col-sm-12 text-center center-block" style="background-color: #1b85b8; padding: 2% 0 2% 0; width: 100%; color: black;">
+    <div class="col-lg-12 col-md-12 col-sm-12 text-center center-block" style="background-color: #1b85b8; padding: 2% 0; width: 100%; color: black;">
         <h2 style="font-weight: bold;">Current Room Count</h2>
         <h1 id="currentRoomCount" class="text-center"></h1>
     </div>
@@ -61,6 +59,7 @@
     });
 
     function getCounts() {
+        // checks the local host address to help point to the right URL
         var getCountsUrl = window.location.href.toLowerCase();
         if (getCountsUrl.indexOf("home") == -1) {
             getCountsUrl = "/home/getcounts";
@@ -68,7 +67,7 @@
         else {
             getCountsUrl = "getcounts";
         }
-        $.get(getCountsUrl, function (data) { // ADD /Home TO "getcounts" THIS WHEN DEPLOYING
+        $.get(getCountsUrl, function (data) {
 
             // deserialize json into obj
             var cameraData = JSON.parse(data);

@@ -16,9 +16,8 @@ namespace hella.Controllers
 
         public HomeController()
         {
-            _client = new RestClient("https://192.168.0.100:8091");
-            System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; };
-
+            _client = new RestClient("https://192.168.0.100:8091"); // Camera IP on the local network
+            System.Net.ServicePointManager.ServerCertificateValidationCallback += delegate { return true; }; // Bypass security certificate
         }
 
         public ActionResult Index()
@@ -26,18 +25,13 @@ namespace hella.Controllers
             return View();
         }
 
-        // http://localhost:xx/home/getcounts
-
         public ActionResult GetCounts()
         {
-            var accessToken = RetrieveAccessToken();
-            var cameraDatas = RetrieveCameraData(accessToken);
+            var accessToken = RetrieveAccessToken(); // retrieve access token from camera for authentication
+            var cameraDatas = RetrieveCameraData(accessToken); // retrieve camera data with authentication successful
 
             return Json(JsonConvert.SerializeObject(cameraDatas), JsonRequestBehavior.AllowGet);
         }
-
-
-
 
         private string RetrieveAccessToken()
         {
@@ -46,8 +40,8 @@ namespace hella.Controllers
             request.AddHeader("Content-Type", "application/json");
             var authenticationDetails = new AuthenticationModel
             {
-                Username = "user-role-edit",
-                Password = "Sm4rtCity"
+                Username = "user-role-edit", // Camera username to be edited here
+                Password = "Sm4rtCity" // Camera password to be edited here
             };
             var jsonBody = JsonConvert.SerializeObject(authenticationDetails);
             request.AddParameter("application/json", jsonBody, ParameterType.RequestBody);
@@ -79,20 +73,6 @@ namespace hella.Controllers
             var cameraDatas = jsonSection.Datas;
 
             return cameraDatas;
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
         }
     }
 }
